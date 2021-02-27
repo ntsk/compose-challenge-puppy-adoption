@@ -18,6 +18,7 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -31,6 +32,7 @@ import com.example.androiddevchallenge.ui.composable.PuppyDetail
 import com.example.androiddevchallenge.ui.composable.PuppyList
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
+@ExperimentalFoundationApi
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
+@ExperimentalFoundationApi
 fun MyApp(repository: PuppiesRepository) {
     Surface(color = MaterialTheme.colors.background) {
         val navController = rememberNavController()
