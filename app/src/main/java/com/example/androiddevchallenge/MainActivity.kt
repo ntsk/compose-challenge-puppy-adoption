@@ -20,42 +20,45 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.datasource.PuppiesRepository
+import com.example.androiddevchallenge.ui.composable.PuppyDetail
+import com.example.androiddevchallenge.ui.composable.PuppyList
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val repository = PuppiesRepository()
         setContent {
             MyTheme {
-                MyApp()
+                MyApp(repository)
             }
         }
     }
 }
 
-// Start building your app here!
 @Composable
-fun MyApp() {
+fun MyApp(repository: PuppiesRepository) {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
-    }
-}
-
-@Preview("Light Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun LightPreview() {
-    MyTheme {
-        MyApp()
-    }
-}
-
-@Preview("Dark Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp()
+        val navController = rememberNavController()
+        NavHost(navController, startDestination = "puppies") {
+            composable("puppies") {
+                PuppyList(repository.getPuppies(), navController)
+            }
+            composable(
+                "puppies/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id") ?: ""
+                val puppy = repository.getPuppy(id) ?: return@composable
+                PuppyDetail(puppy = puppy, navController = navController)
+            }
+        }
     }
 }
