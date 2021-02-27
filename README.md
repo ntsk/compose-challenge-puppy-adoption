@@ -30,3 +30,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+All puppy photos are downloaded from [Unsplash](https://unsplash.com/). You need to follow https://unsplash.com/license.
